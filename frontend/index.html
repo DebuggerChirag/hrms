@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Refunds Dashboard</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <!-- Login / Sign Up View -->
+    <div id="auth-container" class="login-wrapper active fade-in">
+      
+      <!-- Login Card -->
+      <div id="login-card" class="login-card glass active-form">
+        <div class="logo-large">
+          <div class="logo-icon"></div>
+          <h2>HRMS</h2>
+        </div>
+        <p class="login-subtitle">Patient Authentication Portal</p>
+        <form id="loginForm" class="login-form">
+          <div class="form-group">
+            <label>Policy Number</label>
+            <input type="text" id="loginPolicy" required placeholder="POL-123456">
+          </div>
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" id="loginDob" required>
+          </div>
+          <button type="submit" class="btn primary-btn" style="margin-top: 1rem;">Login to My Refunds</button>
+        </form>
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); cursor:pointer;" id="showSignupBtn">New Patient? <strong style="color:var(--accent-color);">Sign Up Here</strong></p>
+      </div>
+
+      <!-- Sign Up Card -->
+      <div id="signup-card" class="login-card glass hidden">
+        <div class="logo-large">
+          <div class="logo-icon"></div>
+          <h2>Sign Up</h2>
+        </div>
+        <p class="login-subtitle">Register to generate your Policy Number</p>
+        <form id="signupForm" class="login-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="signupName" required placeholder="Jane Doe">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="signupEmail" required placeholder="jane@example.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="signupPhone" required placeholder="+1 234 567 8900">
+          </div>
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" id="signupDob" required>
+          </div>
+          <button type="submit" class="btn primary-btn" style="margin-top: 0.5rem;">Register Patient</button>
+        </form>
+        <p style="margin-top: 1.5rem; color: var(--text-secondary); cursor:pointer;" id="showLoginBtn">Already registered? <strong style="color:var(--accent-color);">Login</strong></p>
+        
+        <div id="signupResult" class="result-card hidden" style="width: 100%; margin-top: 1.5rem;"></div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="main-app" class="app-container hidden fade-in">
+      <aside class="sidebar glass">
+        <div class="logo">
+           <div class="logo-icon"></div>
+           <h2>HRMS</h2>
+        </div>
+        <nav>
+          <ul style="height: 100%; display: flex; flex-direction: column;">
+            <li class="nav-item active" data-target="new-request-view">
+              <span class="icon">📝</span> Submit Request
+            </li>
+            <li class="nav-item" data-target="status-view" id="nav-status-view">
+              <span class="icon">🔍</span> My Refunds
+            </li>
+            <li class="nav-item" id="logoutBtn" style="color: var(--error-color); margin-top: auto;">
+              <span class="icon" style="filter: grayscale(1);">🚪</span> Logout
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      
+      <main class="main-content">
+        <header class="topbar fade-in">
+          <div>
+            <h1>Refund Dashboard</h1>
+            <p class="subtitle" id="welcomeSubtitle">Welcome, Patient</p>
+          </div>
+          <div class="user-profile">
+            <div class="avatar"></div>
+            <span id="headerPatientName">User</span>
+          </div>
+        </header>
+
+        <!-- Submit Request View -->
+        <div id="new-request-view" class="view active fade-in-up">
+          <div class="card glass">
+            <h2>New Refund Submission</h2>
+            <form id="refundForm" class="grid-form">
+              <div class="form-group full-width">
+                <label>Refund Reason</label>
+                <textarea name="reason" required placeholder="Describe the medical procedure or reason for refund" rows="3"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label>Amount Requested ($)</label>
+                <input type="number" step="0.01" name="amount_requested" required placeholder="0.00">
+              </div>
+              <div class="form-group full-width file-upload">
+                <label>Supporting Document (PDF)</label>
+                <input type="file" name="document" accept="application/pdf" required class="file-input">
+              </div>
+              
+              <div class="form-actions full-width">
+                <button type="submit" class="btn primary-btn">
+                  <span class="btn-text">Submit Claim</span>
+                  <div class="spinner hidden" id="submitSpinner"></div>
+                </button>
+              </div>
+            </form>
+            <div id="submitResult" class="result-card hidden"></div>
+          </div>
+        </div>
+
+        <!-- Track Status View -->
+        <div id="status-view" class="view hidden fade-in-up">
+          <div class="card glass">
+            <h2>My Refunds</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Here are your past and present refund requests linked to your policy.</p>
+            <div id="refundsList" style="display: flex; flex-direction: column; gap: 20px;">
+              <!-- Refund cards injected here -->
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
